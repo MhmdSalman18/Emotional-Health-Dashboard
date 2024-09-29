@@ -11,20 +11,24 @@ class _HomePage2State extends State<HomePage2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ListView.separated(
-                  itemBuilder: (context,index){
-                    return Text("hi")
-                  },
-                  separatorBuilder: separatorBuilder,
-                  itemCount: itemCount),
-            ],
-          ),
-        ),
+      appBar: AppBar(
+        title: Text("appbar"),
       ),
+      body: SafeArea(
+          child: ListView.separated(
+              itemBuilder: (ctx, index) {
+                return ListTile(
+                  title: Text("title $index"),
+                  subtitle: Text("subtitle"),
+                  leading: CircleAvatar(
+                    backgroundImage: AssetImage('assets/images/img1.jpg'),
+                  ),
+                );
+              },
+              separatorBuilder: (ctx, index) {
+                return Divider();
+              },
+              itemCount: 30)),
     );
   }
 }
