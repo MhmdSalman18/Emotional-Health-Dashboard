@@ -1,6 +1,7 @@
 import 'package:demo1/demo1.dart';
 import 'package:demo1/home_screen.dart';
 import 'package:demo1/home2.dart';
+import 'package:demo1/register.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
@@ -13,7 +14,7 @@ class Myapp extends StatelessWidget {
   Widget build(BuildContext context) {
     return  MaterialApp(
       theme: ThemeData(primaryColor: const Color.fromARGB(255, 234, 7, 255)),
-      home: HomePage2(),
+      home: RegisterPage(),
     );
   }
 }
