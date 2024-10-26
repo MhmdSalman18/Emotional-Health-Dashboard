@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'dart:convert';
@@ -58,56 +59,55 @@ class _EntryFormState extends State<EntryForm> {
   }
 
   Future<void> _submitEntry() async {
-    if (_textController.text.isEmpty || (_image == null && _video == null && _audioPath == null)) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill in all fields and select at least one media file.")));
-      return;
-    }
-
-    final uri = Uri.parse("http://localhost:3000/addEntry");
-    var request = http.MultipartRequest("POST", uri);
-
-    // Debugging: Log selected date and text
-    print("Submitting entry with date: ${_selectedDate.toIso8601String()}, text: ${_textController.text}");
-
-    request.fields['date'] = _selectedDate.toIso8601String();
-    request.fields['text'] = _textController.text;
-
-    // Add files if they exist
-    if (_image != null) {
-      request.files.add(await http.MultipartFile.fromPath('image', _image!.path));
-      print("Image added: ${_image!.path}");
-    }
-    if (_video != null) {
-      request.files.add(await http.MultipartFile.fromPath('video', _video!.path));
-      print("Video added: ${_video!.path}");
-    }
-    if (_audioPath != null) {
-      request.files.add(await http.MultipartFile.fromPath('audio', _audioPath!));
-      print("Audio added: $_audioPath");
-    }
-
-    try {
-      final response = await request.send();
-
-      // Debugging: Log the response status
-      print("Response status: ${response.statusCode}");
-
-      if (response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Entry added!")));
-        _textController.clear();
-        setState(() {
-          _image = null;
-          _video = null;
-          _audioPath = null;
-        });
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to add entry. Status: ${response.statusCode}")));
-      }
-    } catch (e) {
-      print("Error occurred: $e");
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("An error occurred: $e")));
-    }
+  if (_textController.text.isEmpty || (_image == null && _video == null && _audioPath == null)) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please fill in all fields and select at least one media file.")));
+    return;
   }
+
+  final uri = Uri.parse("http://<your-computer-ip>:3000/addEntry");
+  var request = http.MultipartRequest("POST", uri);
+
+  request.fields['date'] = _selectedDate.toIso8601String();
+  request.fields['text'] = _textController.text;
+
+  // Add files if they exist
+  if (_image != null) {
+    request.files.add(await http.MultipartFile.fromPath(
+      'image', _image!.path,
+      contentType: MediaType('image', 'jpeg'), // Add appropriate MIME type
+    ));
+  }
+  if (_video != null) {
+    request.files.add(await http.MultipartFile.fromPath(
+      'video', _video!.path,
+      contentType: MediaType('video', 'mp4'), // Add appropriate MIME type
+    ));
+  }
+  if (_audioPath != null) {
+    request.files.add(await http.MultipartFile.fromPath(
+      'audio', _audioPath!,
+      contentType: MediaType('audio', 'mpeg'), // Add appropriate MIME type
+    ));
+  }
+
+  try {
+    final response = await request.send();
+    if (response.statusCode == 201) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Entry added!")));
+      _textController.clear();
+      setState(() {
+        _image = null;
+        _video = null;
+        _audioPath = null;
+      });
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to add entry. Status: ${response.statusCode}")));
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("An error occurred: $e")));
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
