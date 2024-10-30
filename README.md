@@ -16,7 +16,7 @@ Follow these steps to get your Emotional Health Dashboard up and running:
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/MhmdSalman18/Stroy-Sync.git
+    git clone https://github.com/MhmdSalman18/Emotional-Health-Dashboard.git
     ```
 2. **Navigate to the project directory:**
     ```bash
@@ -64,12 +64,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-### 💬 Get In Touch
 
-If you have any questions or feedback, feel free to reach out:
-
-- **Email:** your.email@example.com
-- **Twitter:** [@yourtwitterhandle](https://twitter.com/yourtwitterhandle)
 
 ---
 
