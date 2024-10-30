@@ -41,3 +41,48 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+pubspec.lock
+build/
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Runner.xcworkspace
+ios/Pods/
+android/.gradle/
+android/app/build/
+android/app/intermediates/
+android/gradle/
+*.iml
+*.log
+*.tmp
+
+# IntelliJ/Android Studio specific
+.idea/
+*.ipr
+*.iws
+*.iml
+*.hprof
+*.jks
+*.keystore
+
+# Xcode specific
+*.xcuserstate
+*.xcworkspace
+DerivedData/
+
+# Other
+*.apk
+*.aar
+*.dSYM
+*.app
+
+# VS Code specific
+.vscode/
