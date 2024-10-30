@@ -1,6 +1,6 @@
 # story_sync
 
-A new Flutter project.
+
 
 ## Getting Started
 
